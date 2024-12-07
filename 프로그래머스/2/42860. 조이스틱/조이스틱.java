@@ -7,12 +7,12 @@ class Solution {
         
         // 문자 변경 횟수
         for (int i = 0; i < name.length(); i++) {
-            answer += Math.min(name.charAt(i) - 'A', 'Z'-name.charAt(i)+1);
+            answer += Math.min(name.charAt(i) - 'A', 'Z' - name.charAt(i) + 1);
        
-        // 연속된 A 개수 확인
-        index = i + 1;
-        while (index < length && name.charAt(index) == 'A') {
-            index++;
+            // 연속된 A 개수 확인
+            index = i + 1;
+            while (index < length && name.charAt(index) == 'A') {
+                index++;
         }
         
         // 최소 이동 횟수
