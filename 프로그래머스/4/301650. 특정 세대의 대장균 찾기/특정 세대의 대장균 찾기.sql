@@ -1,0 +1,27 @@
+-- 코드를 작성해주세요
+/*
+SELECT ID
+FROM ECOLI_DATA
+START WITH PARENT_ID IS NULL
+CONNECT BY PRIOR ID = PARENT_ID
+AND LEVEL = 3
+ORDER BY ID;
+*/
+
+WITH RECURSIVE Generation AS (
+    -- 첫 번째 쿼리: 1세대 대장균 찾기
+    SELECT ID, PARENT_ID, 1 AS GENERATION
+    FROM ECOLI_DATA
+    WHERE PARENT_ID IS NULL
+
+    UNION ALL
+
+    -- 두 번째 쿼리: 자식 대장균 찾기
+    SELECT e.ID, e.PARENT_ID, g.GENERATION + 1
+    FROM ECOLI_DATA e
+    JOIN Generation g ON e.PARENT_ID = g.ID
+)
+SELECT ID
+FROM Generation
+WHERE GENERATION = 3
+ORDER BY ID;
