@@ -10,7 +10,7 @@ class Solution {
         
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < 26; i++) {
-            if (cnt[i] == 1) sb.append((char)(i+'a'));
+            if (cnt[i] == 1) sb.append((char)(i + 'a'));
         }
         return sb.toString(); 
     }
