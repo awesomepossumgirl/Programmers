@@ -2,22 +2,33 @@ import java.util.*;
 
 class Solution {
     public int[] solution(String[] wallpaper) {
-        int top = Integer.MAX_VALUE;
-        int left = Integer.MAX_VALUE;
-        int bottom = Integer.MIN_VALUE;
-        int right = Integer.MIN_VALUE;
+        int row = wallpaper.length;
+        int col = wallpaper[0].length();
         
-        for (int i = 0; i < wallpaper.length; i++) {
-            for (int j = 0; j < wallpaper[i].length(); j++) {
+        boolean[][] desktop = new boolean[row][col];
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
                 if (wallpaper[i].charAt(j) == '#') {
-                    top = Math.min(i, top);
-                    left = Math.min(j, left);
-                    bottom = Math.max(i + 1, bottom);
-                    right = Math.max(j + 1, right);
+                    desktop[i][j] = true;
                 }
             }
         }
         
-        return new int[]{top, left, bottom, right};
+        int[] start = {row, col};
+        int[] end = {0, 0};
+        
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                if (desktop[i][j]) {
+                    start[0] = Math.min(i, start[0]);
+                    start[1] = Math.min(j, start[1]);
+                    end[0] = Math.max(i, end[0]);
+                    end[1] = Math.max(j, end[1]);
+                }
+            }
+        }
+        
+        return new int[]{start[0], start[1], end[0], end[1]};
+
     }
 }

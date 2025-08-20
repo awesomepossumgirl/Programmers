@@ -1,6 +1,6 @@
 # [level 1] 바탕화면 정리 - 161990 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/161990?gad_source=1&gad_campaignid=22215033033&gbraid=0AAAAAC_c4nCjPdt1shnBj7ZfM7egEisOG&gclid=Cj0KCQjw5JXFBhCrARIsAL1ckPsTwnO-sfBer3oi-F3Zt3ckfUV41P-w4ujWudNE5jTpRKgr68ndup4aAl5kEALw_wcB) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/161990) 
 
 ### 성능 요약
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2025년 08월 20일 16:57:25
+2025년 08월 20일 16:57:34
 
 ### 문제 설명
 
