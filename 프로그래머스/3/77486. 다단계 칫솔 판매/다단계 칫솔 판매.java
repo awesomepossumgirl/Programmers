@@ -2,39 +2,65 @@ import java.util.*;
 
 class Solution {
     public int[] solution(String[] enroll, String[] referral, String[] seller, int[] amount) {
-        int[] answer = new int[enroll.length];
+        Map<String, Member> memberMap = new HashMap<>();
         
-        Map<String, String> parentMap = new HashMap<>(); // <나, parent>
-        Map<String, Integer> memberIndexMap = new HashMap<>(); // <나, index>
-        
-        for (int i = 0; i < enroll.length; i++) {
-            parentMap.put(enroll[i], referral[i]);
-            memberIndexMap.put(enroll[i], i);
+        // 1. 모든 멤버 key값 생성
+        for (String name : enroll) {
+            memberMap.put(name, new Member(name));
         }
         
-        for (int i = 0; i < seller.length; i++) {
-            String curSeller = seller[i]; // parent에 넘길 금액
-            int profit = 100 * amount[i]; // 내가 가져갈 수익금
-            
-            while(!curSeller.equals("-")) { // 루트가 "-"이면 더 이상 parent가 없으니 종료
-                // 내 index에 이익금 누적합산
-                int profitForParent = profit / 10;
-                int myProfit = profit - profitForParent;
-
-                // 자신의 index에 금액만큼 더함
-                answer[memberIndexMap.get(curSeller)] += myProfit;
-
-                // parent 노드로 이동하며 수익을 부모에게 넘긴 금액으로 초기화
-                curSeller = parentMap.get(curSeller);
-                profit /= 10;
-
-                // 이익금이 1원 미만인 경우
-                if (profit < 1) {
-                    break;
-                }    
+        // 2. parent 연결
+        for (int i = 0; i < enroll.length; i++) {
+            String name = enroll[i];
+            String parentName = referral[i];
+            if (!parentName.equals("-")) {
+                // 추천인이 없을 경우 "-"
+                memberMap.get(name).setParent(memberMap.get(parentName));
             }
         }
         
+        // 3. 판매 발생 처리
+        for (int i = 0; i < seller.length; i++) {
+            String name = seller[i];
+            int profit = amount[i] * 100;
+            memberMap.get(name).addProfit(profit);
+        }
+        
+        // 4. 결과 배열 만들기
+        int[] answer = new int[enroll.length];
+        for (int i = 0; i < enroll.length; i++) {
+            answer[i] = memberMap.get(enroll[i]).getProfit();
+        }
+     
+    
         return answer;
+    }
+}
+
+class Member {
+    private final String name;
+    private Member parent;
+    private int profit;
+    
+    public Member(String name) {
+        this.name = name;
+        this.profit = 0;
+    }
+    
+    public void setParent(Member parent) {
+        this.parent = parent;
+    }
+    
+    public void addProfit(int money) {
+        int giveToParent = money / 10;
+        this.profit += money - giveToParent;
+        
+        if (parent != null && giveToParent > 0) {
+            parent.addProfit(giveToParent);
+        }
+    }
+    
+    public int getProfit() {
+        return profit;
     }
 }
